@@ -42,26 +42,26 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
 
   @Override
   public void cadastrarPessoaCandidata(String nome, int numero) {
-    if (this.pessoasCandidatas.isEmpty()) {
+    if (pessoasCandidatas.isEmpty()) {
       PessoaCandidata novaPessoa = new PessoaCandidata(nome, numero);
-      this.pessoasCandidatas.add(novaPessoa);
+      pessoasCandidatas.add(novaPessoa);
     } else {
-      for (PessoaCandidata pessoa : this.pessoasCandidatas) {
+      for (PessoaCandidata pessoa : pessoasCandidatas) {
         if (pessoa.getNumero() == numero) {
           System.out.println("Número da pessoa candidata já utilizado!");
           return;
         }
       }
       PessoaCandidata novaPessoa = new PessoaCandidata(nome, numero);
-      this.pessoasCandidatas.add(novaPessoa);
+      pessoasCandidatas.add(novaPessoa);
     }
   }
 
   @Override
   public void cadastrarPessoaEleitora(String nome, String cpf) {
-    if (this.pessoasEleitoras.isEmpty()) {
+    if (pessoasEleitoras.isEmpty()) {
       PessoaEleitora novaPessoa = new PessoaEleitora(nome, cpf);
-      this.pessoasEleitoras.add(novaPessoa);
+      pessoasEleitoras.add(novaPessoa);
     } else {
       for (PessoaEleitora pessoa : pessoasEleitoras) {
         if (pessoa.getCpf().equals(cpf)) {
@@ -76,12 +76,38 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
 
   @Override
   public void votar(String cpfPessoaEleitora, int numeroPessoaCandidata) {
-
+    if (!cpfsComputados.isEmpty()) {
+      for (String cpf : cpfsComputados) {
+        if (cpf.equals(cpfPessoaEleitora)) {
+          System.out.println("Pessoa eleitora já votou!");
+          return;
+        }
+      }
+    }
+    cpfsComputados.add(cpfPessoaEleitora);
+    for (PessoaCandidata pessoa : pessoasCandidatas) {
+      if (pessoa.getNumero() == numeroPessoaCandidata) {
+        pessoa.receberVoto();
+      }
+    }
   }
 
   @Override
   public void mostrarResultado() {
-
+    if (cpfsComputados.isEmpty()) {
+      System.out.println("É preciso ter pelo menos um "
+          + " voto para mostrar o resultado");
+      return;
+    }
+    int total = cpfsComputados.size();
+    for (PessoaCandidata candidata : pessoasCandidatas) {
+      System.out.printf("Nome: %s - %d votos ( %d%% )%n",
+          candidata.getNome(),
+          candidata.getVotos(),
+          Math.round((float) candidata.getVotos() / total * 100)
+      );
+    }
+    System.out.printf("Total de votos: %d%n", total);
   }
 }
 
