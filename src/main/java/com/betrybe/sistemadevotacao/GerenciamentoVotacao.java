@@ -3,9 +3,9 @@ package com.betrybe.sistemadevotacao;
 import java.util.ArrayList;
 
 public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
-  public ArrayList<PessoaCandidata> pessoasCandidatas;
-  public ArrayList<PessoaEleitora> pessoasEleitoras;
-  public ArrayList<String> cpfsComputados;
+  public static ArrayList<PessoaCandidata> pessoasCandidatas;
+  public static ArrayList<PessoaEleitora> pessoasEleitoras;
+  public static ArrayList<String> cpfsComputados;
 
   /**
    * Construtor da Classe Gerenciamento de Votação.
@@ -20,24 +20,12 @@ public class GerenciamentoVotacao implements GerenciamentoVotacaoInterface {
     return pessoasCandidatas;
   }
 
-  public void setPessoasCandidatas(ArrayList<PessoaCandidata> pessoasCandidatas) {
-    this.pessoasCandidatas = pessoasCandidatas;
-  }
-
   public ArrayList<PessoaEleitora> getPessoasEleitoras() {
     return pessoasEleitoras;
   }
 
-  public void setPessoasEleitoras(ArrayList<PessoaEleitora> pessoasEleitoras) {
-    this.pessoasEleitoras = pessoasEleitoras;
-  }
-
   public ArrayList<String> getCpfsComputados() {
     return cpfsComputados;
-  }
-
-  public void setCpfsComputados(ArrayList<String> cpfsComputados) {
-    this.cpfsComputados = cpfsComputados;
   }
 
   @Override
